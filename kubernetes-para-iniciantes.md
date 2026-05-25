@@ -341,7 +341,7 @@ Fundada em 2001, a 4Linux participou das principais transformações da área de
 5. Quando usar (e quando não usar)
 6. Vantagens e certificações
 7. Os principais objetos
-8. Deploy na prática: Super Mario no K8s
+8. Deploy na prática: Snake Classic no K8s
 
 ---
 
@@ -819,32 +819,32 @@ p {
 
 ## Hora do deploy!
 
-Vamos rodar o Super Mario Bros no Kubernetes
+Vamos rodar o Snake Classic no Kubernetes
 
 ---
 <!-- _footer: "" -->
 
-## Deploy: pengbai/docker-supermario
+## Deploy: silvemerson/docker-snake
 
 ```yaml
-# supermario.yaml
+# snake.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: supermario
+  name: docker-snake
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: supermario
+      app: docker-snake
   template:
     metadata:
       labels:
-        app: supermario
+        app: docker-snake
     spec:
       containers:
-      - name: supermario
-        image: pengbai/docker-supermario
+      - name: docker-snake
+        image: silvemerson/docker-snake:latest
         ports:
         - containerPort: 8080
 ```
@@ -855,18 +855,18 @@ spec:
 ## Expondo o jogo com um Service
 
 ```yaml
-# supermario-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: supermario
+  name: docker-snake
 spec:
   selector:
-    app: supermario
+    app: docker-snake
+  type: NodePort
   ports:
   - port: 80
     targetPort: 8080
-  type: NodePort
+    nodePort: 30080
 ```
 
 ---
@@ -874,18 +874,17 @@ spec:
 ## Comandos para subir o deploy
 
 ```bash
-# aplica o Deployment e o Service
-kubectl apply -f supermario.yaml
-kubectl apply -f supermario-service.yaml
+# sobe o cluster kind com port mapping
+kind create cluster --config kind/cluster.yaml
 
-# acompanha os pods subindo
+# aplica Deployment e Service
+kubectl apply -f kind/snake.yaml
+
+# acompanha o pod subindo
 kubectl get pods -w
 
-# descobre a porta exposta pelo NodePort
-kubectl get service supermario
-
-# acessa via port-forward (alternativa local)
-kubectl port-forward service/supermario 8080:80
+# acessa via port-forward (alternativa)
+kubectl port-forward service/docker-snake 8080:80
 ```
 
 Acesse **http://localhost:8080** e jogue! 🕹️
@@ -899,7 +898,7 @@ Acesse **http://localhost:8080** e jogue! 🕹️
 2. API Server     →  salva o estado desejado no etcd
 3. Scheduler      →  escolhe um Worker Node disponível
 4. kubelet        →  recebe a tarefa e instrui o containerd
-5. containerd     →  faz pull da imagem pengbai/docker-supermario
+5. containerd     →  faz pull da imagem silvemerson/docker-snake
 6. Container      →  sobe e escuta na porta 8080
 7. kube-proxy     →  configura o roteamento do NodePort
 8. Service        →  balanceia o tráfego até o Pod

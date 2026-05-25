@@ -18,7 +18,7 @@ _[pausa, observa as mãos]_
 
 _[pausa — normalmente muitas mãos caem]_
 
-"É exatamente pra isso que a gente está aqui. Quando essa palestra acabar, você vai conseguir responder essa pergunta — e ainda sair com um Super Mario rodando dentro de um cluster."
+"É exatamente pra isso que a gente está aqui. Quando essa palestra acabar, você vai conseguir responder essa pergunta — e ainda sair com um Snake Classic rodando dentro de um cluster."
 
 ---
 
@@ -290,7 +290,7 @@ _[aponte para o YAML]_
 
 "Chega de teoria. Vamos colocar a mão na massa e rodar algo divertido."
 
-"Vamos fazer o deploy do Super Mario Bros — um projeto open source que empacota o jogo inteiro numa imagem Docker — dentro de um cluster Kubernetes."
+"Vamos fazer o deploy do Snake Classic Bros — um projeto open source que empacota o jogo inteiro numa imagem Docker — dentro de um cluster Kubernetes."
 
 ---
 
@@ -298,11 +298,11 @@ _[aponte para o YAML]_
 
 _[abra o terminal ao lado dos slides se possível]_
 
-"Esse é o Deployment do Super Mario. A imagem é `pengbai/docker-supermario` — uma imagem pública que roda o jogo em Java, escutando na porta 8080."
+"Esse é o Deployment do Snake Classic. A imagem é `silvemerson/docker-snake` — uma imagem pública que roda o jogo em Java, escutando na porta 8080."
 
 "`replicas: 1` — uma réplica é suficiente para o demo."
 
-"O label `app: supermario` vai ser usado pelo Service para encontrar este Pod."
+"O label `app: docker-snake` vai ser usado pelo Service para encontrar este Pod."
 
 ---
 
@@ -323,11 +323,11 @@ _[abra o terminal ao lado dos slides se possível]_
 > **Faça ao vivo se tiver ambiente disponível.**
 
 ```bash
-kubectl apply -f supermario.yaml
-kubectl apply -f supermario-service.yaml
+kubectl apply -f docker-snake.yaml
+kubectl apply -f docker-snake-service.yaml
 kubectl get pods -w
-kubectl get service supermario
-kubectl port-forward service/supermario 8080:80
+kubectl get service docker-snake
+kubectl port-forward service/docker-snake 8080:80
 ```
 
 "Repara no `kubectl get pods -w` — o `-w` é de watch. Você vê o Pod passando de `Pending` para `ContainerCreating` para `Running` em tempo real."
@@ -370,7 +370,7 @@ _[percorra o fluxo linha por linha]_
 
 _[pausa]_
 
-"O próximo passo prático: instala o **minikube** ou usa o **killercoda.com** — você tem um cluster real no navegador, de graça. Tenta replicar o deploy do Super Mario por conta própria."
+"O próximo passo prático: instala o **minikube** ou usa o **killercoda.com** — você tem um cluster real no navegador, de graça. Tenta replicar o deploy do Snake Classic por conta própria."
 
 ---
 
