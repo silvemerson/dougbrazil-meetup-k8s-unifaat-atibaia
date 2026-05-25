@@ -314,7 +314,6 @@ p {
 }
 </style>
 
-## Quem nos apoia
 
 ![height:52px](4linux-logo/logo-4linux.png)
 
@@ -824,27 +823,27 @@ Vamos rodar o Snake Classic no Kubernetes
 ---
 <!-- _footer: "" -->
 
-## Deploy: silvemerson/docker-snake
+## Deploy: silvemerson/snake-classic
 
 ```yaml
 # snake.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: docker-snake
+  name: snake-classic
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: docker-snake
+      app: snake-classic
   template:
     metadata:
       labels:
-        app: docker-snake
+        app: snake-classic
     spec:
       containers:
-      - name: docker-snake
-        image: silvemerson/docker-snake:latest
+      - name: snake-classic
+        image: silvemerson/snake-classic:0.1
         ports:
         - containerPort: 8080
 ```
@@ -858,10 +857,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: docker-snake
+  name: snake-classic
 spec:
   selector:
-    app: docker-snake
+    app: snake-classic
   type: NodePort
   ports:
   - port: 80
@@ -884,7 +883,7 @@ kubectl apply -f kind/snake.yaml
 kubectl get pods -w
 
 # acessa via port-forward (alternativa)
-kubectl port-forward service/docker-snake 8080:80
+kubectl port-forward service/snake-classic 8080:80
 ```
 
 Acesse **http://localhost:8080** e jogue! 🕹️
@@ -898,7 +897,7 @@ Acesse **http://localhost:8080** e jogue! 🕹️
 2. API Server     →  salva o estado desejado no etcd
 3. Scheduler      →  escolhe um Worker Node disponível
 4. kubelet        →  recebe a tarefa e instrui o containerd
-5. containerd     →  faz pull da imagem silvemerson/docker-snake
+5. containerd     →  faz pull da imagem silvemerson/snake-classic
 6. Container      →  sobe e escuta na porta 8080
 7. kube-proxy     →  configura o roteamento do NodePort
 8. Service        →  balanceia o tráfego até o Pod
@@ -1036,7 +1035,7 @@ p { margin: 0.2rem 0; }
 
 **Emerson Silva**
 
-**Gratuito no Kindle Unlimited**
+**Gratuito na Amazon - Mas amanhã, pq esqueci de ativar pra hj :(**
 
 Escaneie para acessar na Amazon:
 
@@ -1055,6 +1054,5 @@ Escaneie para acessar na Amazon:
 * 🎮 killercoda.com — labs interativos gratuitos
 * 🎓 training.linuxfoundation.org — preparação CKA/CKAD
 * 📝 emerson-silva.blog.br
-* 💬 @silvemerson
 
 Vamos manter contato!

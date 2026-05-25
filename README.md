@@ -27,9 +27,9 @@ Slides da palestra apresentada no **DOUGBR Meetup** na [UNIFAAT](https://www.uni
 3. **O que é e como funciona** — arquitetura, Control Plane e Worker Nodes
 4. **Quando usar** — cenários ideais e quando o K8s é overkill
 5. **Vantagens** — self-healing, auto-scaling, rolling updates e portabilidade
-6. **Certificações** — CKAD, CKA e CKS explicadas
-7. **Principais objetos** — Pod, Deployment, Service, Namespace, ConfigMap e Secret
-8. **Deploy na prática** — Super Mario Bros rodando dentro de um cluster
+6. **Principais objetos** — Pod, Deployment, Service, Namespace, ConfigMap e Secret
+7. **Deploy na prática** — Snake Classic rodando dentro de um cluster kind
+8. **Certificações** — KCNA, KCSA, CKAD, CKA, CKS e o título KubeAstronaut
 
 ---
 
@@ -63,25 +63,59 @@ marp kubernetes-para-iniciantes.md --html --allow-local-files -o kubernetes-para
 
 ---
 
-## Demo: Super Mario no Kubernetes
+## Demo: Snake Classic no Kubernetes
 
-Os manifestos usados no deploy ao vivo estão inline na apresentação. Para reproduzir:
+A demo usa [kind](https://kind.sigs.k8s.io/) para subir um cluster local com port mapping já configurado.
+
+### Pré-requisitos
+
+- [kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/)
+- Docker rodando
+
+### Subir tudo com um comando
 
 ```bash
-# inicia um cluster local
-minikube start
+cd kind
+./setup.sh
+# acesse http://localhost:8080
+```
 
-# aplica os manifestos
-kubectl apply -f supermario.yaml
-kubectl apply -f supermario-service.yaml
+### Ou passo a passo
+
+```bash
+# cria o cluster com port mapping 30080 → localhost:8080
+kind create cluster --config kind/cluster.yaml
+
+# aplica Deployment e Service
+kubectl apply -f kind/snake.yaml
 
 # acompanha o pod subindo
 kubectl get pods -w
 
-# acessa o jogo no navegador
-kubectl port-forward service/supermario 8080:80
+# acessa o jogo
 # http://localhost:8080
 ```
+
+### Encerrar
+
+```bash
+cd kind
+./teardown.sh
+```
+
+### Estrutura da pasta kind
+
+```
+kind/
+├── cluster.yaml        # configuração do cluster (1 control-plane + 2 workers)
+├── snake.yaml          # Deployment + Service do snake-classic
+├── setup.sh            # sobe cluster e faz deploy automaticamente
+├── teardown.sh         # remove o cluster
+└── snake-classic/      # submódulo — github.com/silvemerson/snake-classic
+```
+
+> Para clonar incluindo o submódulo: `git clone --recurse-submodules <repo>`
 
 ---
 
