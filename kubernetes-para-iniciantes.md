@@ -330,6 +330,44 @@ Fundada em 2001, a 4Linux participou das principais transformações da área de
 
 ---
 <!-- _paginate: false -->
+<style scoped>
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 60px;
+}
+h2 {
+  font-size: 2.2rem;
+  color: #00E6CC;
+  margin-bottom: 0.4rem;
+}
+h2::before { display: none; }
+h3 {
+  font-size: 1.1rem;
+  color: #8B9DC3;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+p {
+  font-size: 1rem;
+  color: #8B9DC3;
+  margin-top: 1rem;
+}
+</style>
+
+## Sorteio 4Linux
+
+### Aponte a câmera e participe!
+
+![height:280px](images/qrcode-sorteio.png)
+
+sorteio.4linux.com.br/event/6559d41b
+
+---
+<!-- _paginate: false -->
 
 ## O que veremos hoje
 
